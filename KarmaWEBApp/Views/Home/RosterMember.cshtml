@@ -1,0 +1,12 @@
+﻿@model IEnumerable<KarmaWEBApp.Models.chartable>
+    <div id="Karma">
+    <span class="player-id">@ViewBag.ID</span>
+    <span class="player-Karma">@ViewBag.Karma</span>
+    <span class="player-Attendance">@ViewBag.Attendance</span>
+    </div>
+    <div id="Chars">
+    @foreach (var item in Model)
+    {
+        Html.RenderAction("RosterCharacter", "", new { CharName = item.charname });
+    }
+    </div>

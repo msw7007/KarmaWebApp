@@ -1,0 +1,6 @@
+﻿@model KarmaWEBApp.Models.chartable
+<div class="CharClass @ViewBag.ClassName">
+    <span class="nick">@Html.ValueFor(model => model.charname)</span>
+    <span class="class">@Html.ValueFor(model => model.char_class)</span>
+    <span class="role">@Html.ValueFor(model => model.char_role)</span>
+</div>

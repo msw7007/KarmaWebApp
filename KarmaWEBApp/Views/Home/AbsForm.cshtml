@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Заявка на опоздание";
+    ViewBag.Author = "Кагерэт";
+}
+<header class="page-header">
+    <h1><span aria-hidden="true" class="fa fa-users"></span> @ViewBag.Title</h1>
+</header>
+<p>@ViewBag.Description</p>
+
+@if (ViewBag.NewAbsent == true)
+{
+    using (Html.BeginForm("GetAbsForm", "", FormMethod.Post))
+    {
+        <table style="width:90%;">
+            <tr>
+                <td><p>Введите причину отсутствия</p></td>
+                <td>@Html.TextBox("Reason","причина", new {@class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td><p>Выберите дату начала отсутствия</p></td>
+                <td><input type="date" id="datepicker1" name="Date1" asp-for="DateBegin" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><p>Выберите дату окончания отсутствия (оставьте пустым если отсутствие в 1 день)</p></td>
+                <td><input type="date" id="datepicker2" name="Date2" asp-for="DateEnd" class="form-control" formnovalidate/></td>
+            </tr>
+            <tr>
+                <td><p>ID Игрока (Уникальное числовое значение, которое связывает между собой несколько персонажей)</p></td>
+                <td>@Html.TextBox("IDPlayer","Ваш ID", new {@class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Подтвердить отсутствие\опоздание" /> </td>
+                <td></td>
+            </tr>
+        </table>
+    }
+}    
+
+<link href="@Url.Content("~/Content/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-2.2.3.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.js")" type="text/javascript"></script>
+
+
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#datepicker1").datepicker({
+                format: 'yyyy/MM/dd'
+            })
+            $("#datepicker2").datepicker({
+                format: 'yyyy/MM/dd'
+            })
+        });
+
+    </script>
+}

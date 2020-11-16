@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Итоговая карма";
+    ViewBag.Description = "Здесь перечислена карма активных членов статиков. Ссылки в датах ведут к логам.";
+    ViewBag.Author = "Кагерэт";
+}
+
+<header class="jumbotron">
+    <h1>@ViewBag.Title</h1>
+    <p class="lead">@ViewBag.Description</p>
+
+</header>
+
+@{Html.RenderAction("TableKarmaFull", "raiddates");}

@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище staticdbModel" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="absentdata">
+          <Key>
+            <PropertyRef Name="idAbsentData" />
+          </Key>
+          <Property Name="idAbsentData" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AbsentText" Type="varchar" MaxLength="255" />
+          <Property Name="AbsentDate1" Type="date" />
+          <Property Name="AbsentDate2" Type="date" />
+          <Property Name="PlayerID" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="attendance_list">
+          <Key>
+            <PropertyRef Name="ID_attendance" />
+          </Key>
+          <Property Name="ID_attendance" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="chartable">
+          <Key>
+            <PropertyRef Name="charname" />
+          </Key>
+          <Property Name="charname" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="idplayer" Type="varchar" MaxLength="12" />
+          <Property Name="char_role" Type="varchar" MaxLength="40" />
+          <Property Name="char_class" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="class_list">
+          <Key>
+            <PropertyRef Name="Id_Class" />
+          </Key>
+          <Property Name="Id_Class" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="playerdata">
+          <Key>
+            <PropertyRef Name="idPlayer" />
+          </Key>
+          <Property Name="idPlayer" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="IsActive" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="raiddates">
+          <Key>
+            <PropertyRef Name="IdRaidValue" />
+          </Key>
+          <Property Name="IdRaidValue" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RaidDate" Type="int" />
+          <Property Name="IDPlayer" Type="varchar" MaxLength="12" />
+          <Property Name="IDAttendance" Type="int" />
+          <Property Name="MinusAddition" Type="int" />
+          <Property Name="PlusAddition" Type="int" />
+          <Property Name="IDIsActive" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="raiddatetable">
+          <Key>
+            <PropertyRef Name="idRaidDateTable" />
+          </Key>
+          <Property Name="idRaidDateTable" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RaidDate" Type="date" />
+          <Property Name="LogRef" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="roles_list">
+          <Key>
+            <PropertyRef Name="Id_Roles" />
+          </Key>
+          <Property Name="Id_Roles" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="settingstable">
+          <Key>
+            <PropertyRef Name="idSetting" />
+          </Key>
+          <Property Name="idSetting" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ValueSetting" Type="int" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "def.staticdb.user" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="username" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <Association Name="char_class">
+          <End Role="class_list" Type="Self.class_list" Multiplicity="0..1" />
+          <End Role="chartable" Type="Self.chartable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="class_list">
+              <PropertyRef Name="Id_Class" />
+            </Principal>
+            <Dependent Role="chartable">
+              <PropertyRef Name="char_class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="char_id">
+          <End Role="playerdata" Type="Self.playerdata" Multiplicity="0..1" />
+          <End Role="chartable" Type="Self.chartable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="playerdata">
+              <PropertyRef Name="idPlayer" />
+            </Principal>
+            <Dependent Role="chartable">
+              <PropertyRef Name="idplayer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="char_role">
+          <End Role="roles_list" Type="Self.roles_list" Multiplicity="0..1" />
+          <End Role="chartable" Type="Self.chartable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles_list">
+              <PropertyRef Name="Id_Roles" />
+            </Principal>
+            <Dependent Role="chartable">
+              <PropertyRef Name="char_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ID_Attendance">
+          <End Role="attendance_list" Type="Self.attendance_list" Multiplicity="0..1" />
+          <End Role="raiddates" Type="Self.raiddates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="attendance_list">
+              <PropertyRef Name="ID_attendance" />
+            </Principal>
+            <Dependent Role="raiddates">
+              <PropertyRef Name="IDAttendance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ID_Player">
+          <End Role="playerdata" Type="Self.playerdata" Multiplicity="0..1" />
+          <End Role="raiddates" Type="Self.raiddates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="playerdata">
+              <PropertyRef Name="idPlayer" />
+            </Principal>
+            <Dependent Role="raiddates">
+              <PropertyRef Name="IDPlayer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PlayerID">
+          <End Role="playerdata" Type="Self.playerdata" Multiplicity="0..1" />
+          <End Role="absentdata" Type="Self.absentdata" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="playerdata">
+              <PropertyRef Name="idPlayer" />
+            </Principal>
+            <Dependent Role="absentdata">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AbsentInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="staticdb">
+          <Parameter Name="InputPlayerID" Type="int" Mode="In" />
+          <Parameter Name="Date1" Type="date" Mode="In" />
+          <Parameter Name="Date2" Type="date" Mode="In" />
+          <Parameter Name="reason" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CharActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="staticdb">
+          <Parameter Name="InputPlayerID" Type="int" Mode="In" />
+          <Parameter Name="InputActivator" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="CharInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="staticdb">
+          <Parameter Name="InputNickname" Type="varchar" Mode="In" />
+          <Parameter Name="InputPlayerID" Type="varchar" Mode="In" />
+          <Parameter Name="InputCharRole" Type="varchar" Mode="In" />
+          <Parameter Name="InputCharClass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="NewRaidData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="staticdb">
+          <Parameter Name="InputDate" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище staticdbModelContainer">
+          <EntitySet Name="absentdata" EntityType="Self.absentdata" Schema="" store:Type="Tables" />
+          <EntitySet Name="attendance_list" EntityType="Self.attendance_list" Schema="" store:Type="Tables" />
+          <EntitySet Name="chartable" EntityType="Self.chartable" Schema="" store:Type="Tables" />
+          <EntitySet Name="class_list" EntityType="Self.class_list" Schema="" store:Type="Tables" />
+          <EntitySet Name="playerdata" EntityType="Self.playerdata" Schema="" store:Type="Tables" />
+          <EntitySet Name="raiddates" EntityType="Self.raiddates" Schema="" store:Type="Tables" />
+          <EntitySet Name="raiddatetable" EntityType="Self.raiddatetable" Schema="" store:Type="Tables" />
+          <EntitySet Name="roles_list" EntityType="Self.roles_list" Schema="" store:Type="Tables" />
+          <EntitySet Name="settingstable" EntityType="Self.settingstable" Schema="" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" store:Type="Tables" store:Schema="">
+            <DefiningQuery>SELECT
+`user`.`username`, 
+`user`.`password`
+FROM `user` AS `user`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="char_class" Association="Self.char_class">
+            <End Role="class_list" EntitySet="class_list" />
+            <End Role="chartable" EntitySet="chartable" />
+          </AssociationSet>
+          <AssociationSet Name="char_id" Association="Self.char_id">
+            <End Role="playerdata" EntitySet="playerdata" />
+            <End Role="chartable" EntitySet="chartable" />
+          </AssociationSet>
+          <AssociationSet Name="char_role" Association="Self.char_role">
+            <End Role="roles_list" EntitySet="roles_list" />
+            <End Role="chartable" EntitySet="chartable" />
+          </AssociationSet>
+          <AssociationSet Name="ID_Attendance" Association="Self.ID_Attendance">
+            <End Role="attendance_list" EntitySet="attendance_list" />
+            <End Role="raiddates" EntitySet="raiddates" />
+          </AssociationSet>
+          <AssociationSet Name="ID_Player" Association="Self.ID_Player">
+            <End Role="playerdata" EntitySet="playerdata" />
+            <End Role="raiddates" EntitySet="raiddates" />
+          </AssociationSet>
+          <AssociationSet Name="PlayerID" Association="Self.PlayerID">
+            <End Role="playerdata" EntitySet="playerdata" />
+            <End Role="absentdata" EntitySet="absentdata" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="staticdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="KarmaDBEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="AbsentInsert">
+            <Parameter Name="InputPlayerID" Mode="In" Type="Int32" />
+            <Parameter Name="Date1" Mode="In" Type="DateTime" />
+            <Parameter Name="Date2" Mode="In" Type="DateTime" />
+            <Parameter Name="reason" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CharActive">
+            <Parameter Name="InputPlayerID" Mode="In" Type="Int32" />
+            <Parameter Name="InputActivator" Mode="In" Type="SByte" />
+          </FunctionImport>
+          <FunctionImport Name="CharInsert">
+            <Parameter Name="InputNickname" Mode="In" Type="String" />
+            <Parameter Name="InputPlayerID" Mode="In" Type="String" />
+            <Parameter Name="InputCharRole" Mode="In" Type="String" />
+            <Parameter Name="InputCharClass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="NewRaidData">
+          <Parameter Name="InputDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="absentdata" EntityType="staticdbModel.absentdata" />
+          <EntitySet Name="attendance_list" EntityType="staticdbModel.attendance_list" />
+          <EntitySet Name="chartable" EntityType="staticdbModel.chartable" />
+          <EntitySet Name="class_list" EntityType="staticdbModel.class_list" />
+          <EntitySet Name="playerdata" EntityType="staticdbModel.playerdata" />
+          <EntitySet Name="raiddates" EntityType="staticdbModel.raiddates" />
+          <EntitySet Name="raiddatetable" EntityType="staticdbModel.raiddatetable" />
+          <EntitySet Name="roles_list" EntityType="staticdbModel.roles_list" />
+          <EntitySet Name="settingstable" EntityType="staticdbModel.settingstable" />
+          <EntitySet Name="user" EntityType="staticdbModel.user" />
+          <AssociationSet Name="PlayerID" Association="staticdbModel.PlayerID">
+            <End Role="playerdata" EntitySet="playerdata" />
+            <End Role="absentdata" EntitySet="absentdata" />
+          </AssociationSet>
+          <AssociationSet Name="ID_Attendance" Association="staticdbModel.ID_Attendance">
+            <End Role="attendance_list" EntitySet="attendance_list" />
+            <End Role="raiddates" EntitySet="raiddates" />
+          </AssociationSet>
+          <AssociationSet Name="char_class" Association="staticdbModel.char_class">
+            <End Role="class_list" EntitySet="class_list" />
+            <End Role="chartable" EntitySet="chartable" />
+          </AssociationSet>
+          <AssociationSet Name="char_id" Association="staticdbModel.char_id">
+            <End Role="playerdata" EntitySet="playerdata" />
+            <End Role="chartable" EntitySet="chartable" />
+          </AssociationSet>
+          <AssociationSet Name="char_role" Association="staticdbModel.char_role">
+            <End Role="roles_list" EntitySet="roles_list" />
+            <End Role="chartable" EntitySet="chartable" />
+          </AssociationSet>
+          <AssociationSet Name="ID_Player" Association="staticdbModel.ID_Player">
+            <End Role="playerdata" EntitySet="playerdata" />
+            <End Role="raiddates" EntitySet="raiddates" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="absentdata">
+          <Key>
+            <PropertyRef Name="idAbsentData" />
+          </Key>
+          <Property Name="idAbsentData" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AbsentText" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="AbsentDate1" Type="DateTime" />
+          <Property Name="AbsentDate2" Type="DateTime" />
+          <Property Name="PlayerID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="playerdata" Relationship="staticdbModel.PlayerID" FromRole="absentdata" ToRole="playerdata" />
+        </EntityType>
+        <EntityType Name="attendance_list">
+          <Key>
+            <PropertyRef Name="ID_attendance" />
+          </Key>
+          <Property Name="ID_attendance" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="raiddates" Relationship="staticdbModel.ID_Attendance" FromRole="attendance_list" ToRole="raiddates" />
+        </EntityType>
+        <EntityType Name="chartable">
+          <Key>
+            <PropertyRef Name="charname" />
+          </Key>
+          <Property Name="charname" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="idplayer" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="char_role" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="char_class" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="class_list" Relationship="staticdbModel.char_class" FromRole="chartable" ToRole="class_list" />
+          <NavigationProperty Name="playerdata" Relationship="staticdbModel.char_id" FromRole="chartable" ToRole="playerdata" />
+          <NavigationProperty Name="roles_list" Relationship="staticdbModel.char_role" FromRole="chartable" ToRole="roles_list" />
+        </EntityType>
+        <EntityType Name="class_list">
+          <Key>
+            <PropertyRef Name="Id_Class" />
+          </Key>
+          <Property Name="Id_Class" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="chartable" Relationship="staticdbModel.char_class" FromRole="class_list" ToRole="chartable" />
+        </EntityType>
+        <EntityType Name="playerdata">
+          <Key>
+            <PropertyRef Name="idPlayer" />
+          </Key>
+          <Property Name="idPlayer" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="SByte" />
+          <NavigationProperty Name="absentdata" Relationship="staticdbModel.PlayerID" FromRole="playerdata" ToRole="absentdata" />
+          <NavigationProperty Name="chartable" Relationship="staticdbModel.char_id" FromRole="playerdata" ToRole="chartable" />
+          <NavigationProperty Name="raiddates" Relationship="staticdbModel.ID_Player" FromRole="playerdata" ToRole="raiddates" />
+        </EntityType>
+        <EntityType Name="raiddates">
+          <Key>
+            <PropertyRef Name="IdRaidValue" />
+          </Key>
+          <Property Name="IdRaidValue" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RaidDate" Type="Int32" />
+          <Property Name="IDPlayer" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="IDAttendance" Type="Int32" />
+          <Property Name="MinusAddition" Type="Int32" />
+          <Property Name="PlusAddition" Type="Int32" />
+          <Property Name="IDIsActive" Type="SByte" />
+          <NavigationProperty Name="attendance_list" Relationship="staticdbModel.ID_Attendance" FromRole="raiddates" ToRole="attendance_list" />
+          <NavigationProperty Name="playerdata" Relationship="staticdbModel.ID_Player" FromRole="raiddates" ToRole="playerdata" />
+        </EntityType>
+        <EntityType Name="raiddatetable">
+          <Key>
+            <PropertyRef Name="idRaidDateTable" />
+          </Key>
+          <Property Name="idRaidDateTable" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RaidDate" Type="DateTime" />
+          <Property Name="LogRef" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="roles_list">
+          <Key>
+            <PropertyRef Name="Id_Roles" />
+          </Key>
+          <Property Name="Id_Roles" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="chartable" Relationship="staticdbModel.char_role" FromRole="roles_list" ToRole="chartable" />
+        </EntityType>
+        <EntityType Name="settingstable">
+          <Key>
+            <PropertyRef Name="idSetting" />
+          </Key>
+          <Property Name="idSetting" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ValueSetting" Type="Int32" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="username" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="username" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="PlayerID">
+          <End Type="staticdbModel.playerdata" Role="playerdata" Multiplicity="0..1" />
+          <End Type="staticdbModel.absentdata" Role="absentdata" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="playerdata">
+              <PropertyRef Name="idPlayer" />
+            </Principal>
+            <Dependent Role="absentdata">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ID_Attendance">
+          <End Type="staticdbModel.attendance_list" Role="attendance_list" Multiplicity="0..1" />
+          <End Type="staticdbModel.raiddates" Role="raiddates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="attendance_list">
+              <PropertyRef Name="ID_attendance" />
+            </Principal>
+            <Dependent Role="raiddates">
+              <PropertyRef Name="IDAttendance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="char_class">
+          <End Type="staticdbModel.class_list" Role="class_list" Multiplicity="0..1" />
+          <End Type="staticdbModel.chartable" Role="chartable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="class_list">
+              <PropertyRef Name="Id_Class" />
+            </Principal>
+            <Dependent Role="chartable">
+              <PropertyRef Name="char_class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="char_id">
+          <End Type="staticdbModel.playerdata" Role="playerdata" Multiplicity="0..1" />
+          <End Type="staticdbModel.chartable" Role="chartable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="playerdata">
+              <PropertyRef Name="idPlayer" />
+            </Principal>
+            <Dependent Role="chartable">
+              <PropertyRef Name="idplayer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="char_role">
+          <End Type="staticdbModel.roles_list" Role="roles_list" Multiplicity="0..1" />
+          <End Type="staticdbModel.chartable" Role="chartable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles_list">
+              <PropertyRef Name="Id_Roles" />
+            </Principal>
+            <Dependent Role="chartable">
+              <PropertyRef Name="char_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ID_Player">
+          <End Type="staticdbModel.playerdata" Role="playerdata" Multiplicity="0..1" />
+          <End Type="staticdbModel.raiddates" Role="raiddates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="playerdata">
+              <PropertyRef Name="idPlayer" />
+            </Principal>
+            <Dependent Role="raiddates">
+              <PropertyRef Name="IDPlayer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище staticdbModelContainer" CdmEntityContainer="KarmaDBEntities">
+          <FunctionImportMapping FunctionImportName="AbsentInsert" FunctionName="Хранилище staticdbModel.AbsentInsert" />
+          <FunctionImportMapping FunctionImportName="CharActive" FunctionName="Хранилище staticdbModel.CharActive" />
+          <FunctionImportMapping FunctionImportName="CharInsert" FunctionName="Хранилище staticdbModel.CharInsert" />
+          <FunctionImportMapping FunctionImportName="NewRaidData" FunctionName="Хранилище staticdbModel.NewRaidData" />
+          <EntitySetMapping Name="absentdata">
+            <EntityTypeMapping TypeName="staticdbModel.absentdata">
+              <MappingFragment StoreEntitySet="absentdata">
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="AbsentDate2" ColumnName="AbsentDate2" />
+                <ScalarProperty Name="AbsentDate1" ColumnName="AbsentDate1" />
+                <ScalarProperty Name="AbsentText" ColumnName="AbsentText" />
+                <ScalarProperty Name="idAbsentData" ColumnName="idAbsentData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="attendance_list">
+            <EntityTypeMapping TypeName="staticdbModel.attendance_list">
+              <MappingFragment StoreEntitySet="attendance_list">
+                <ScalarProperty Name="ID_attendance" ColumnName="ID_attendance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chartable">
+            <EntityTypeMapping TypeName="staticdbModel.chartable">
+              <MappingFragment StoreEntitySet="chartable">
+                <ScalarProperty Name="char_class" ColumnName="char_class" />
+                <ScalarProperty Name="char_role" ColumnName="char_role" />
+                <ScalarProperty Name="idplayer" ColumnName="idplayer" />
+                <ScalarProperty Name="charname" ColumnName="charname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="class_list">
+            <EntityTypeMapping TypeName="staticdbModel.class_list">
+              <MappingFragment StoreEntitySet="class_list">
+                <ScalarProperty Name="Id_Class" ColumnName="Id_Class" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="playerdata">
+            <EntityTypeMapping TypeName="staticdbModel.playerdata">
+              <MappingFragment StoreEntitySet="playerdata">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="idPlayer" ColumnName="idPlayer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="raiddates">
+            <EntityTypeMapping TypeName="staticdbModel.raiddates">
+              <MappingFragment StoreEntitySet="raiddates">
+                <ScalarProperty Name="IDIsActive" ColumnName="IDIsActive" />
+                <ScalarProperty Name="PlusAddition" ColumnName="PlusAddition" />
+                <ScalarProperty Name="MinusAddition" ColumnName="MinusAddition" />
+                <ScalarProperty Name="IDAttendance" ColumnName="IDAttendance" />
+                <ScalarProperty Name="IDPlayer" ColumnName="IDPlayer" />
+                <ScalarProperty Name="RaidDate" ColumnName="RaidDate" />
+                <ScalarProperty Name="IdRaidValue" ColumnName="IdRaidValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="raiddatetable">
+            <EntityTypeMapping TypeName="staticdbModel.raiddatetable">
+              <MappingFragment StoreEntitySet="raiddatetable">
+                <ScalarProperty Name="LogRef" ColumnName="LogRef" />
+                <ScalarProperty Name="RaidDate" ColumnName="RaidDate" />
+                <ScalarProperty Name="idRaidDateTable" ColumnName="idRaidDateTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles_list">
+            <EntityTypeMapping TypeName="staticdbModel.roles_list">
+              <MappingFragment StoreEntitySet="roles_list">
+                <ScalarProperty Name="Id_Roles" ColumnName="Id_Roles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settingstable">
+            <EntityTypeMapping TypeName="staticdbModel.settingstable">
+              <MappingFragment StoreEntitySet="settingstable">
+                <ScalarProperty Name="ValueSetting" ColumnName="ValueSetting" />
+                <ScalarProperty Name="idSetting" ColumnName="idSetting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="staticdbModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

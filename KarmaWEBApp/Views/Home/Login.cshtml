@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Логирование";
+    ViewBag.Description = "Введите логин и пароль для доступа к функциям РЛа";
+    ViewBag.Author = "Кагерэт";
+}
+
+    <h1>@ViewBag.Title</h1>
+    <p class="lead">@ViewBag.Description</p>
+
+@using (Html.BeginForm("Login", "", FormMethod.Post))
+{
+    <table style="width:90%;">
+        <tr>
+            <td><p>Логин</p></td>
+            <td>@Html.TextBox("User")</td>
+        </tr>
+        <tr>
+            <td><p>Пароль</p></td>
+            <td>@Html.TextBox("Password")</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Войти" /> </td>
+            <td></td>
+        </tr>
+    </table>
+}

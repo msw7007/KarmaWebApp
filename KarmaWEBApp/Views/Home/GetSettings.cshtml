@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Настройка коэфициентов формулы";
+    ViewBag.Author = "Кагерэт";
+}
+
+<header class="page-header">
+    <h1><span aria-hidden="true" class="fa fa-users"></span> @ViewBag.Title</h1>
+</header>
+
+<p>Формула расчёта:</p>
+<p>=A*(kP*wP-kM*wM) + (1 - A)* ((B*RT)*(cB*(kwB+kwB*(cB/RT))+cO*(kwO-kwO*(cO/RT))-cA*(kwA+kwA**(cA/RT))))</p>
+<p>Легенда:</p>
+<p>Настраиваемые коэффициенты:</p>
+
+@using (Html.BeginForm("GetSettings", "", FormMethod.Post))
+{
+    <table style="width:90%;">
+        <tr>
+            <td><p>A - коэфициент веса дополнительных начислений кармы (20 (%) по умолчанию) (указать без знака процента)</p></td>
+            <td><input type="text" name="AValue" class="form-control" value=@ViewBag.AValue /></td>
+        </tr>
+        <tr>
+            <td><p>wP - вес положительных начислений в карму (по умолчанию 6)</p></td>
+            <td><input type="text" name="wPValue" class="form-control" value=@ViewBag.wPValue /></td>
+        </tr>
+        <tr>
+            <td><p>wM - вес отрицательных начислений в карму (по умолчанию 10)</p></td>
+            <td><input type="text" name="wMValue" class="form-control" value=@ViewBag.wMValue /></td>
+        </tr>
+        <tr>
+            <td><p>kwB - вес посещения РТ (по умолчанию 2)</p></td>
+            <td><input type="text" name="kwBValue" class="form-control" value=@ViewBag.kwBValue /></td>
+        </tr>
+        <tr>
+            <td><p>kwO - вес опозднаия на РТ (по умолчанию 1)</p></td>
+            <td><input type="text" name="kwOValue" class="form-control" value=@ViewBag.kwOValue /></td>
+        </tr>
+        <tr>
+            <td><p>kwA - вес пропуска РТ (по умолчанию 4)</p></td>
+            <td><input type="text" name="kwAValue" class="form-control" value=@ViewBag.kwAValue /></td>
+        </tr>
+        <tr>
+            <td><p>Количество РТ, после которых новичку начинает полноценно считаться карма</p></td>
+            <td><input type="text" name="STValue" class="form-control" value=@ViewBag.STValue /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Зарегистрировать" /></td>
+            <td></td>
+        </tr>
+    </table>
+}    
+
+<p>Расчитываемые коэффициенты:</p>
+<table style="width:90%;">
+    <tr>
+        <td><p>B - коэфициент множителя первичного значения кармы (расчитывается делением максимальной первичной кармы (X) на максимальнео число рейдов)</p></td>
+    </tr>
+    <tr>
+        <td><p>X - первичная карма (карма которая высчитывается из показателя присутствий\отсутствий рейдера)</p></td>
+    </tr>
+    <tr>
+        <td><p>X = (cB*(kwB+kwB*(cB/RT))+cO*(kwO-kwO*(cO/RT))-cA*(kwA+kwA**(cA/RT)))</p></td>
+    </tr>
+    <tr>
+        <td><p>RT - количество РТ прошедших с начала рейдинга</p></td>
+    </tr>
+    <tr>
+        <td><p>cB - количество РТ, которое рейдер был в рейде</p></td>
+    </tr>
+    <tr>
+        <td><p>cO - количество РТ, которое рейдер опоздал</p></td>
+    </tr>
+    <tr>
+        <td><p>cA - количество РТ, которое рейдер пропустил</p></td>
+    </tr>
+    <tr>
+        <td><p>kP - количество плюсовых действий кармы</p></td>
+    </tr>
+    <tr>
+        <td><p>kM - количество минусовых действий кармы</p></td>
+    </tr>
+</table>

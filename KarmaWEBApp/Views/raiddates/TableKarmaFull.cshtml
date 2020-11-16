@@ -1,0 +1,40 @@
+﻿<table class="table">
+    @for (int i = 0; i < ViewBag.TKFC; i++)
+    {
+    <tr>
+        @for (int j = 0; j < ViewBag.TKFR; j++)
+        {
+            if (i == 0 && j > 1)
+            {
+                if (ViewBag.RLMode)
+                {
+                    <td>
+                        <a href='@Url.Action("index","raiddates", new {  id = @ViewBag.TableArray[ViewBag.TKFC, j] }, null)'>@ViewBag.TableArray[i, j]</a>
+                    </td>
+                    }
+                    else
+                    {
+                        if (@ViewBag.TableArray[ViewBag.TKFC, j] != null)
+                    {
+                        <td>
+                            <a href="@ViewBag.TableArray[ViewBag.TKFC, j]">@ViewBag.TableArray[i, j]</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @ViewBag.TableArray[i, j]
+                        </td>
+                    }
+                }
+            }
+            else
+            {
+                <td>
+                    @ViewBag.TableArray[i, j]
+                </td>
+            }
+        }
+    </tr>
+    }
+</table>

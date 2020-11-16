@@ -1,0 +1,67 @@
+﻿@model IEnumerable<KarmaWEBApp.Models.playerdata>
+
+@{
+    ViewBag.Title = "Настройка ростера";
+    ViewBag.Author = "Кагерэт";
+}
+
+<header class="page-header">
+    <h1><span aria-hidden="true" class="fa fa-users"></span> @ViewBag.Title</h1>
+</header>
+
+<h3>Сводная информация</h3>
+<table style="width:90%;">
+    <tr>
+        <td><p>Активные игроки:</p></td>
+        <td><p>Неактивные игроки:</p></td>
+    </tr>
+    <tr>
+        <td>
+            <p>Танки: @ViewBag.ATanksCount</p>
+            <p>МДД: @ViewBag.AMddCount</p>
+            <p>РДД: @ViewBag.ARddCount</p>
+            <p>ХИЛЛЫ: @ViewBag.AHealsCount</p>
+        </td>
+        <td>
+            <p>Танки: @ViewBag.ITanksCount</p>
+            <p>МДД: @ViewBag.IMddCount</p>
+            <p>РДД: @ViewBag.IRddCount</p>
+            <p>ХИЛЛЫ: @ViewBag.IHealsCount</p>
+        </td>
+    </tr>
+</table>
+
+<h3>Ростер</h3>
+<div class="Roster">
+    @foreach (var item in Model)
+    {
+        using (Html.BeginForm("Roster", "", FormMethod.Post))
+        {
+            <div class="player">
+                @if (item.IsActive == 1)
+                {   
+                    <span class="ActivButton"><input type="submit" value="В инактив петуха" class="btn btn-default" /></span>
+                    <input type="hidden" name="Active" value="0" />
+                    <input type="hidden" name="IDPlayer" value="@item.idPlayer" />
+                    { Html.RenderAction("RosterMember", "", new { id = item.idPlayer }); }
+                }
+            </div>
+        }
+    }
+<h3>Запас</h3>
+    @foreach (var item in Model)
+    {
+        using (Html.BeginForm("Roster", "", FormMethod.Post))
+        {
+            <div class="player">
+                @if (item.IsActive == 0)
+                {
+                    <span class="ActivButton"><input type="submit" value="Заставить страдать" class="btn btn-default" /></span>
+                    <input type="hidden" name="Active" value="1" />
+                    <input type="hidden" name="IDPlayer" value="@item.idPlayer" />
+                    { Html.RenderAction("RosterMember", "", new { id = item.idPlayer }); }
+                }
+            </div>
+        }
+    }
+</div>

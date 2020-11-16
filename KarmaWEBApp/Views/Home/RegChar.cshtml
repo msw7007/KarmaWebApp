@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Регистрация";
+    ViewBag.Author = "Кагерэт";
+}
+
+<header class="page-header">
+    <h1><span aria-hidden="true" class="fa fa-users"></span> @ViewBag.Title</h1>
+</header>
+
+<p>@ViewBag.Description</p>
+
+
+@if (ViewBag.NewRegistr == true)
+{
+    using (Html.BeginForm("GetRegChar", "", FormMethod.Post))
+    {
+        <table style="width:90%;">
+            <tr>
+                <td><p>Введите ник персонажа</p></td>
+                <td><input type="text" name="Nickname" asp-for="DateEnd" class="form-control" /></td>
+            </tr>
+            <tr> 
+                <td><p>Выберите роль персонажа</p></td>
+                <td>@Html.DropDownList("DropDownListRoles", (IEnumerable<SelectListItem>)ViewBag.DropRolesList, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td><p>Выберите класс персонажа</p></td>
+                <td>@Html.DropDownList("DropDownListClass", (IEnumerable<SelectListItem>)ViewBag.DropClassList, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td><p>ID Игрока (Уникальное числовое значение, которое связывает между собой несколько персонажей)</p></td>
+                <td><input type="text" name="IDPlayer" asp-for="IDPlayer" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Зарегистрировать" /></td>
+                <td></td>
+            </tr>
+        </table>
+    }
+}
+
+

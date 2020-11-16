@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Система начисления кармы";
+    ViewBag.Author = "Кагерэт";
+}
+@model IEnumerable<KarmaWEBApp.Models.raiddates>
+
+<header class="page-header">
+    <h1><span aria-hidden="true" class="fa fa-users"></span> @ViewBag.Title</h1>
+</header>
+<h3>Начисление кармы</h3>
+Выбор кармы на дроп листах
+Кнопка подтверждения
+Автоматическая простановка 2 для опоздунов
+@if (ViewBag.NewRaid)
+{
+    using (Html.BeginForm("", "Home", FormMethod.Post))
+    {
+        <table style="width:90%;">
+            <tr>
+                <td><p>Дата РТ:</p></td>
+                <td><input type="date" id="RTDATE" name="DateRT" class="form-control" formnovalidate /></td>
+                <td><input type="submit" value="Создать" /> </td>
+            </tr>
+        </table>
+    }
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th class="col-md-8">
+                ID:Ник(Класс\Роль)
+            </th>
+            <th class="col-md-1">
+                Карма
+            </th>
+            <th class="col-md-1">
+                Штрафы
+            </th>
+            <th class="col-md-1">
+                Бонусы
+            </th>
+            <th class="col-md-1">
+                Сохранить
+            </th>
+        </tr>
+    </table>
+    <table class="table">
+        @foreach (var item in Model)
+        {
+            Html.RenderAction("Edit", "raiddates", new { id = item.IdRaidValue });
+        }
+    </table>
+}
+
+<h3>Таблица кармы</h3>
+        Ник слева, дата сверху, в центре таблица на выборку и кнопка принять
+
+<link href="@Url.Content("~/Content/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-2.2.3.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.js")" type="text/javascript"></script>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#RTDATE").datepicker({
+                format: 'yyyy/MM/dd'
+            })
+        });
+
+    </script>
+}
+
+        

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d469be081f9a46269b29237301079d6b" Name="Diagram1">
+        <EntityTypeShape EntityType="staticdbModel.absentdata" Width="1.5" PointX="3" PointY="11.125" />
+        <EntityTypeShape EntityType="staticdbModel.attendance_list" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="staticdbModel.chartable" Width="1.5" PointX="6" PointY="4.5" />
+        <EntityTypeShape EntityType="staticdbModel.class_list" Width="1.5" PointX="3.75" PointY="8" />
+        <EntityTypeShape EntityType="staticdbModel.playerdata" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="staticdbModel.raiddates" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="staticdbModel.raiddatetable" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="staticdbModel.roles_list" Width="1.5" PointX="3.75" PointY="1.875" />
+        <EntityTypeShape EntityType="staticdbModel.settingstable" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="staticdbModel.user" Width="1.5" PointX="5.75" PointY="7.75" />
+        <AssociationConnector Association="staticdbModel.PlayerID" />
+        <AssociationConnector Association="staticdbModel.ID_Attendance" />
+        <AssociationConnector Association="staticdbModel.char_class" />
+        <AssociationConnector Association="staticdbModel.char_id" />
+        <AssociationConnector Association="staticdbModel.char_role" />
+        <AssociationConnector Association="staticdbModel.ID_Player" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
